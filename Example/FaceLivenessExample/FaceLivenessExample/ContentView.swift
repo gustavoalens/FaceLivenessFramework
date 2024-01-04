@@ -1,21 +1,20 @@
-//
-//  ContentView.swift
-//  FaceLivenessExample
-//
-//  Created by Gustavo Alencar Silva on 12/10/23.
-//
-
 import SwiftUI
+import FaceLivenessFramework
 
 struct ContentView: View {
+    
+    @StateObject var viewModel = FaceLivenessViewModel()
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            Text(viewModel.message)
+            if let image = viewModel.currentImage {
+                Image(image, scale: 2, orientation: .upMirrored, label: Text(""))
+            }
         }
         .padding()
+        .onAppear {
+            viewModel.start()
+        }
     }
 }
 

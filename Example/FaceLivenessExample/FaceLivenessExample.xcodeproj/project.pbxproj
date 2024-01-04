@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D4F1A702AEC42F80082B084 /* FaceLivenessViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4F1A6F2AEC42F80082B084 /* FaceLivenessViewModel.swift */; };
+		1D5C02652AEC522800D823F7 /* FaceLivenessFramework in Frameworks */ = {isa = PBXBuildFile; productRef = 1D5C02642AEC522800D823F7 /* FaceLivenessFramework */; };
 		1DBD1F9D2AD870E8004195C3 /* FaceLivenessExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBD1F9C2AD870E8004195C3 /* FaceLivenessExampleApp.swift */; };
 		1DBD1F9F2AD870E8004195C3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DBD1F9E2AD870E8004195C3 /* ContentView.swift */; };
 		1DBD1FA12AD870EA004195C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1DBD1FA02AD870EA004195C3 /* Assets.xcassets */; };
@@ -14,6 +16,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1D4F1A6F2AEC42F80082B084 /* FaceLivenessViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceLivenessViewModel.swift; sourceTree = "<group>"; };
+		1D4F1A712AEC47D80082B084 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		1DBD1F992AD870E8004195C3 /* FaceLivenessExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FaceLivenessExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DBD1F9C2AD870E8004195C3 /* FaceLivenessExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceLivenessExampleApp.swift; sourceTree = "<group>"; };
 		1DBD1F9E2AD870E8004195C3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -28,18 +32,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D5C02652AEC522800D823F7 /* FaceLivenessFramework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D5C02632AEC522800D823F7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		1DBD1F902AD870E8004195C3 = {
 			isa = PBXGroup;
 			children = (
 				1DBD1FAB2AD87213004195C3 /* Packages */,
 				1DBD1F9B2AD870E8004195C3 /* FaceLivenessExample */,
 				1DBD1F9A2AD870E8004195C3 /* Products */,
+				1D5C02632AEC522800D823F7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,11 +67,13 @@
 		1DBD1F9B2AD870E8004195C3 /* FaceLivenessExample */ = {
 			isa = PBXGroup;
 			children = (
+				1D4F1A712AEC47D80082B084 /* Info.plist */,
 				1DBD1F9C2AD870E8004195C3 /* FaceLivenessExampleApp.swift */,
 				1DBD1F9E2AD870E8004195C3 /* ContentView.swift */,
 				1DBD1FA02AD870EA004195C3 /* Assets.xcassets */,
 				1DBD1FA22AD870EA004195C3 /* FaceLivenessExample.entitlements */,
 				1DBD1FA32AD870EA004195C3 /* Preview Content */,
+				1D4F1A6F2AEC42F80082B084 /* FaceLivenessViewModel.swift */,
 			);
 			path = FaceLivenessExample;
 			sourceTree = "<group>";
@@ -95,6 +110,9 @@
 			dependencies = (
 			);
 			name = FaceLivenessExample;
+			packageProductDependencies = (
+				1D5C02642AEC522800D823F7 /* FaceLivenessFramework */,
+			);
 			productName = FaceLivenessExample;
 			productReference = 1DBD1F992AD870E8004195C3 /* FaceLivenessExample.app */;
 			productType = "com.apple.product-type.application";
@@ -151,6 +169,7 @@
 			files = (
 				1DBD1F9F2AD870E8004195C3 /* ContentView.swift in Sources */,
 				1DBD1F9D2AD870E8004195C3 /* FaceLivenessExampleApp.swift in Sources */,
+				1D4F1A702AEC42F80082B084 /* FaceLivenessViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,6 +298,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FaceLivenessExample/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "The camera is needed to face recognition";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -317,6 +338,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FaceLivenessExample/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "The camera is needed to face recognition";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -364,6 +387,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1D5C02642AEC522800D823F7 /* FaceLivenessFramework */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FaceLivenessFramework;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1DBD1F912AD870E8004195C3 /* Project object */;
 }
