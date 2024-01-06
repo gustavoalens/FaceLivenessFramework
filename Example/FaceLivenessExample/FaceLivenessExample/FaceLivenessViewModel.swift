@@ -1,10 +1,13 @@
 import SwiftUI
 import FaceLivenessFramework
 import Combine
+import ARKit
 
 final class FaceLivenessViewModel:/* FaceLivenessViewModelProtocol*/ ObservableObject {
     @Published var currentImage: CGImage?
     @Published var message: String = "Iniciando"
+    var sceneView: ARSCNView { liveness.sceneView }
+    
     private let liveness = FaceLiveness()
     
     func start() {
@@ -15,9 +18,6 @@ final class FaceLivenessViewModel:/* FaceLivenessViewModelProtocol*/ ObservableO
 }
 
 extension FaceLivenessViewModel: FaceLivenessDelegate {
-    func didUpdateVideo(currentImage: CGImage?) {
-        self.currentImage = currentImage
-    }
     
     func didDetect(detected: Bool) {
         message = detected ? "Blinked" : "Not blinked"
