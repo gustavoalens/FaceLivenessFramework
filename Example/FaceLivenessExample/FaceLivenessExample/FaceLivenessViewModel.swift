@@ -23,9 +23,3 @@ extension FaceLivenessViewModel: FaceLivenessDelegate {
         message = detected ? "Blinked" : "Not blinked"
     }
 }
-
-
-//protocol FaceLivenessViewModelProtocol: ObservableObject {
-//    var currentImage: Published<CGImage?> { get }
-//}
-
