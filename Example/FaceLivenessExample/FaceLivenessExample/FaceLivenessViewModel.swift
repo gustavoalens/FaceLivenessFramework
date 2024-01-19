@@ -12,7 +12,7 @@ final class FaceLivenessViewModel:/* FaceLivenessViewModelProtocol*/ ObservableO
     
     func start() {
         Task {
-            await liveness.startLiveness(with: self)
+            await liveness.startLiveness(validations: [.blink, .horizontalMovement, .verticalMovement, .smile], with: self)
         }        
     }
 }
