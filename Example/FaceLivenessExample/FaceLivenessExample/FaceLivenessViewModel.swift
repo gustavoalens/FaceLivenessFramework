@@ -12,14 +12,14 @@ final class FaceLivenessViewModel:/* FaceLivenessViewModelProtocol*/ ObservableO
     
     func start() {
         Task {
-            await liveness.startLiveness(validations: [.blink, .horizontalMovement, .verticalMovement, .smile], with: self)
+            await liveness.startLiveness(validations: [.blink, .horizontalMovement, .verticalMovement, .smile])
         }        
     }
 }
 
-extension FaceLivenessViewModel: FaceLivenessDelegate {
-    
-    func didDetect(detected: Bool) {
-        message = detected ? "Blinked" : "Not blinked"
-    }
-}
+//extension FaceLivenessViewModel: FaceLivenessDelegate {
+//    
+//    func didDetect(detected: Bool) {
+//        message = detected ? "Blinked" : "Not blinked"
+//    }
+//}

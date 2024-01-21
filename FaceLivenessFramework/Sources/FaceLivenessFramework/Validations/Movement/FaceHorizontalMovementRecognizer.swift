@@ -1,13 +1,13 @@
 import Foundation
 import Combine
 
-final class FaceVerticalMovementRecognizer: FaceMovementRecognizerProtocol, FaceRecognizerProtocol {
+final class FaceHorizontalMovementRecognizer: FaceMovementRecognizerProtocol, FaceRecognizerProtocol {
     
     // MARK: - Properties
     private var subscriptions: Set<AnyCancellable> = Set()
     private var facePublisher: PassthroughSubject<FaceRotation, Never> = PassthroughSubject<FaceRotation, Never>()
     
-    private let queue: DispatchQueue = .init(label: String(describing: FaceVerticalMovementRecognizer.self))
+    private let queue: DispatchQueue = .init(label: String(describing: FaceHorizontalMovementRecognizer.self))
     @Published private var result: Bool = false
     
     // MARK: - Protocol Methods
@@ -16,7 +16,7 @@ final class FaceVerticalMovementRecognizer: FaceMovementRecognizerProtocol, Face
     }
     
     func stop() {
-//        facePublisher.
+        //        facePublisher.
     }
     
     func didChanged(transform: FaceRotation) {
@@ -24,7 +24,10 @@ final class FaceVerticalMovementRecognizer: FaceMovementRecognizerProtocol, Face
     }
     
     func recognized() async -> Bool {
-        return (try? await $result.async()) ?? false
+        start()
+        let result = (try? await $result.async()) ?? false
+        stop()
+        return result
     }
     
     // MARK: - Methods
