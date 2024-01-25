@@ -1,0 +1,3 @@
+enum FaceLivenessError {
+    case unauthorized
+}

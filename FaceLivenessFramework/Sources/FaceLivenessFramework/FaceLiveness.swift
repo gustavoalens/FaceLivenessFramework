@@ -39,10 +39,11 @@ public final class FaceLiveness: NSObject, FaceLivenessProtocol {
             return
         }
         
-        let newValidation = ValidationFactory.getRecognizer(for: validations.removeFirst())
-        newValidation.start()
-        currentValidation = newValidation
-        // TODO: send to caller the change to show orientations to user
+        let newValidation = validations.removeFirst()
+        let recognizer = ValidationFactory.getRecognizer(for: validations.removeFirst())
+        recognizer.start()
+        currentValidation = recognizer
+        ValidationChange.changed(to: newValidation) // TODO: send to caller the change to show orientations to user
     }
     
     // MARK: - Validation Methods
@@ -76,34 +77,9 @@ extension FaceLiveness: ARSCNViewDelegate {
     }
 }
 
-// TODO: Add delegate to handle with validations changes to show to user? Or completion?
-
 public protocol FaceLivenessProtocol {
     func startLiveness(validations: [LivenessValidation]) async -> ValidationResult
     func stop()
 }
 
-enum FaceLivenessError {
-    case unauthorized
-    case timeout // TODO: Add waiting time definition
-}
-
-public enum LivenessValidation {
-    case blink
-    case smile
-    case verticalMovement
-    case horizontalMovement
-}
-
-struct FaceRotation {
-    let fromXAxis: Float
-    let fromYAxis: Float
-    let fromZAxis: Float
-}
-
-
-public enum ValidationResult {
-    case unauthorized
-    case valid
-    case invalid
-}
+// TODO: Add delegate to handle with validations changes to show to user? Or completion?

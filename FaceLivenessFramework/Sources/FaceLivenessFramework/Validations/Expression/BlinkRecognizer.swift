@@ -1,6 +1,8 @@
 import ARKit
 
-final class BlinkRecognizer: FaceRecognizerProtocol {
+final class BlinkRecognizer: FaceExpressionRecognizerProtocol {
+    let shapeType: Set<ARFaceAnchor.BlendShapeLocation> = [.eyeBlinkLeft, .eyeBlinkRight]
+    
     func start() {
         // TODO: implement
     }
@@ -9,7 +11,7 @@ final class BlinkRecognizer: FaceRecognizerProtocol {
         // TODO: implement
     }
     
-    func didChanged(faceAnchor: ARFaceAnchor) {
+    func didChanged(variations: [ARFaceAnchor.BlendShapeLocation : NSNumber?]) {
         // TODO: implement
     }
     

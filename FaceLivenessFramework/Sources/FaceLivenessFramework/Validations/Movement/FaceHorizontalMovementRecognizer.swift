@@ -5,7 +5,7 @@ final class FaceHorizontalMovementRecognizer: FaceMovementRecognizerProtocol, Fa
     
     // MARK: - Properties
     private var subscriptions: Set<AnyCancellable> = Set()
-    private var facePublisher: PassthroughSubject<FaceRotation, Never> = PassthroughSubject<FaceRotation, Never>()
+    private let facePublisher: PassthroughSubject<FaceRotation, Never> = PassthroughSubject<FaceRotation, Never>()
     
     private let queue: DispatchQueue = .init(label: String(describing: FaceHorizontalMovementRecognizer.self))
     @Published private var result: Bool = false
@@ -16,7 +16,7 @@ final class FaceHorizontalMovementRecognizer: FaceMovementRecognizerProtocol, Fa
     }
     
     func stop() {
-        //        facePublisher.
+        //
     }
     
     func didChanged(transform: FaceRotation) {

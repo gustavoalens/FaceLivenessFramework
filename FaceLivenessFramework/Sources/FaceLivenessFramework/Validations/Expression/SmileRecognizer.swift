@@ -1,6 +1,8 @@
 import ARKit
 
-final class SmileRecognizer: FaceRecognizerProtocol {
+final class SmileRecognizer: FaceExpressionRecognizerProtocol {
+    let shapeType: Set<ARFaceAnchor.BlendShapeLocation> = [.mouthSmileLeft, .mouthSmileRight]
+    
     func start() {
         // TODO: implement
     }
@@ -9,7 +11,7 @@ final class SmileRecognizer: FaceRecognizerProtocol {
         // TODO: implement
     }
     
-    func didChanged(faceAnchor: ARFaceAnchor) {
+    func didChanged(variations: [ARFaceAnchor.BlendShapeLocation : NSNumber?]) {
         // TODO: implement
     }
     
