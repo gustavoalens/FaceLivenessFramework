@@ -35,7 +35,6 @@ final class FaceHorizontalMovementRecognizer: FaceMovementRecognizerProtocol, Fa
         facePublisher
             .collect(.byTime(DispatchQueue.main, .seconds(1)))
             .receive(on: queue)
-            .map { $0 }
             .sink { [weak self] rotations in
                 self?.calculatedRecognization(rotations: rotations)
             }
@@ -50,7 +49,7 @@ final class FaceHorizontalMovementRecognizer: FaceMovementRecognizerProtocol, Fa
     
     func hasVerticalMovement(in rotations: [FaceRotation]) -> Bool {
         guard let first = rotations.first, let last = rotations.last else { return false }
-        let delta = first.fromYAxis - last.fromYAxis
+        let delta = first.fromXAxis - last.fromXAxis
         return delta > 10 // TODO: Need to calibrate the value
     }
 }

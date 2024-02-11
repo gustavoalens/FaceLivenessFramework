@@ -35,7 +35,6 @@ final class FaceVerticalMovementRecognizer: FaceMovementRecognizerProtocol, Face
         facePublisher
             .collect(.byTime(DispatchQueue.main, .seconds(1)))
             .receive(on: queue)
-            .map { $0 }
             .sink { [weak self] rotations in
                 self?.calculatedRecognization(rotations: rotations)
             }
