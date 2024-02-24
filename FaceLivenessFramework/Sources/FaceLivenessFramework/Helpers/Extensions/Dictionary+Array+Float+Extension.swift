@@ -1,6 +1,6 @@
 import Foundation
 
-extension Dictionary where Value == Array<NSNumber> {
+extension Dictionary where Value == Array<Float> {
     mutating func add(onKey key: Key, value: Value.Element?) {
         guard let  value = value else { return }
         guard self[key] != nil else {

@@ -7,10 +7,8 @@ final class BlinkRecognizer: FaceExpressionRecognizerProtocol {
     private var subscriptions: Set<AnyCancellable> = Set()
     private let controlPublisher: PassthroughSubject<FaceAnchorChange, Never> = PassthroughSubject<FaceAnchorChange, Never>()
     
-    private let queue: DispatchQueue = .init(label: String(describing: BlinkRecognizer.self))
+    private let queue: DispatchQueue = .init(label: String(describing: BlinkRecognizer.self), qos: .userInteractive)
     @Published private var result: Bool = false
-    
-    typealias FaceAnchorChange = [ARFaceAnchor.BlendShapeLocation: NSNumber?]
     
     func start() {
         setupPublisher()
@@ -36,32 +34,38 @@ final class BlinkRecognizer: FaceExpressionRecognizerProtocol {
         controlPublisher
             .collect(.byTime(DispatchQueue.main, .seconds(1)))
             .receive(on: queue)
-            .reduce([ARFaceAnchor.BlendShapeLocation: [NSNumber]](), { partial, changes in
-                var new = partial
-                changes.forEach { changes in
-                    changes.forEach { dictChange in
-                        new.add(onKey: dictChange.key, value: dictChange.value)
+            .sink { [weak self] partialResult in
+                let variationsByShape = partialResult.reduce([ARFaceAnchor.BlendShapeLocation: [Float]](), { partial, changes in
+                    var new = partial // TODO: get only min and max
+                    changes.forEach { changes in
+                        new.add(onKey: changes.key, value: Float(truncating: changes.value ?? 0.0))
                     }
-                }
-                return new
-            })
-            .sink { [weak self] variationsByShape in
+                    return new
+                })
                 self?.checkVariation(variationsByShape: variationsByShape)
             }
             .store(in: &subscriptions)
     }
     
-    private func checkVariation(variationsByShape: [ARFaceAnchor.BlendShapeLocation: [NSNumber]]) {
+    private func checkVariation(variationsByShape: [ARFaceAnchor.BlendShapeLocation: [Float]]) {
         let didBlink = shapeType.allSatisfy { type in
-            guard let variation = variationsByShape[type] else { return false } // TODO: Send error result?
+            guard let variation = variationsByShape[type] else {
+                return false
+            } // TODO: Send error result?
+            print("\(type) - \(variation)")
             return isBlink(variation: variation)
         }
         if didBlink {
-            result = true
+            DispatchQueue.main.async {
+                self.result = true
+            }
         }
     }
     
-    private func isBlink(variation: [NSNumber]) -> Bool {
-        return false
+    private func isBlink(variation: [Float]) -> Bool {
+        guard let max = variation.max(), let min = variation.min() else { return false }
+        return max >= 0.85 && min <= 0.3
     }
 }
+
+typealias FaceAnchorChange = [ARFaceAnchor.BlendShapeLocation: NSNumber?]

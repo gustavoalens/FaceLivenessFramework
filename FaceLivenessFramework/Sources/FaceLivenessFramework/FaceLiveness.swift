@@ -12,6 +12,7 @@ public final class FaceLiveness: NSObject, FaceLivenessProtocol {
     // MARK: - Protocol Methods
     public func startLiveness(validations: [LivenessValidation]) async -> ValidationResult {
         guard await isAuthorized() else { return .unauthorized }
+        self.validations = validations
         startSession()
         return (try? await $result.async()) ?? .invalid
     }
@@ -24,6 +25,9 @@ public final class FaceLiveness: NSObject, FaceLivenessProtocol {
     private func startSession() {
         sceneView.delegate = self
         sceneView.session.run(getConfiguration(), options: [.resetTracking, .removeExistingAnchors])
+        Task {
+            await nextValidation()
+        }
     }
     
     private func getConfiguration() -> ARFaceTrackingConfiguration {
@@ -33,17 +37,20 @@ public final class FaceLiveness: NSObject, FaceLivenessProtocol {
         return configuration
     }
     
-    private func nextValidation() {
+    private func nextValidation() async {
         guard !validations.isEmpty else {
             result = .valid
             return
         }
         
         let newValidation = validations.removeFirst()
-        let recognizer = ValidationFactory.getRecognizer(for: validations.removeFirst())
+        let recognizer = ValidationFactory.getRecognizer(for: newValidation)
         recognizer.start()
         currentValidation = recognizer
-        ValidationChange.changed(to: newValidation) // TODO: send to caller the change to show orientations to user
+        if await recognizer.recognized() {
+            await nextValidation()
+        }
+//        ValidationChange.changed(to: newValidation) // TODO: send to caller the change to show orientations to user
     }
     
     // MARK: - Validation Methods
